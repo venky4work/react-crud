@@ -72,7 +72,8 @@ export const updateOne = (data) =>
   createAction({
     endpoint: "http://18.217.55.36:8081/api/metadatas",
     method: "PUT",
-    body: data,
+    body: JSON.stringify({"listName": data.listName}),
+    headers: { 'Content-Type': 'application/json' },
     types: [
       { type: UPDATE_METADATA },
       {

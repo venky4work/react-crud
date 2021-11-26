@@ -10,9 +10,11 @@ import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteOne, listAll } from "../actions/metadatas";
+import { useHistory } from "react-router";
 
 export default function MetadataList() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { metadatas } = useSelector((state) => ({
     metadatas:
       state.metadatas.results.length === 0 ? [] : state.metadatas.results,
@@ -25,6 +27,11 @@ export default function MetadataList() {
     dispatch(deleteOne(id));
     // console.log('onClick', id);
   };
+
+  const handleUpdate = (id) => {
+    history.push("/edit/"+id)
+  };
+
   return (
     <TableContainer component={Paper} style={{ width: 700, margin: 30 }}>
       <Table
@@ -37,6 +44,7 @@ export default function MetadataList() {
             <TableCell>Id</TableCell>
             <TableCell>ListName</TableCell>
             <TableCell>Action</TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -50,8 +58,19 @@ export default function MetadataList() {
               </TableCell>
               <TableCell>{row.ListName}</TableCell>
               <TableCell>
-                <Button variant="contained" onClick={() => handleDelete(row.id)}>
+                <Button
+                  variant="contained"
+                  onClick={() => handleDelete(row.id)}
+                >
                   Delete
+                </Button>
+              </TableCell>
+              <TableCell>
+              <Button
+                  variant="contained"
+                  onClick={() => handleUpdate(row.id)}
+                >
+                  Edit
                 </Button>
               </TableCell>
             </TableRow>
